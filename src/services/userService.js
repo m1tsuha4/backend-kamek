@@ -38,6 +38,16 @@ class UserService {
     await user.update({ is_deleted: true });  
     return true;  
   }  
+
+  static async login(data) {
+    return await User.findOne({
+      where: {
+        email: data.email,
+        password: data.password,
+        is_deleted: false
+      }
+    });
+  }
 }  
   
-module.exports = UserService;  
+module.exports = {UserService};  

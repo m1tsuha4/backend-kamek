@@ -1,8 +1,8 @@
 const express = require('express');  
 const router = express.Router();  
-const UserController = require('../controllers/userController');  
+const {UserController, upload} = require('../controllers/userController');  
 
-router.post('/user', UserController.create);  
+router.post('/register', UserController.create);  
 router.get('/user', UserController.getAll);  
 router.get('/user/:id', UserController.getById);  
 router.put('/user/:id', UserController.update);  

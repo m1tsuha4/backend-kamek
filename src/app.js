@@ -6,7 +6,7 @@ const {checkBlacklist, authenticateToken} = require('./config/middleware');
 
 const fs = require('fs');
 const path = require('path');
-const { AuthenticationController } = require("./controllers/authenticationController");
+const { UserController } = require("./controllers/userController");
 
 const app = express();
 const port = 3000;
@@ -70,7 +70,7 @@ loadRoutes(app);
 watchRoutes(app);
 // Apply the middleware to all routes except the login route
 // Define the login route explicitly
-app.post('/api/login', AuthenticationController.login);
+app.post('/api/login', UserController.login);
 
 app.use('/api', checkBlacklist, authenticateToken); 
 //Error Handling
