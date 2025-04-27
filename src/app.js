@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 //Example 
-// app.use('/images-karyawan', express.static(path.join(__dirname, 'public/karyawan')));
+app.use('/images-user', express.static(path.join(__dirname, 'public/user')));
 
 
 const corsOptions = {
@@ -71,6 +71,7 @@ watchRoutes(app);
 // Apply the middleware to all routes except the login route
 // Define the login route explicitly
 app.post('/api/login', UserController.login);
+app.post('/api/register', UserController.create);
 
 app.use('/api', checkBlacklist, authenticateToken); 
 //Error Handling

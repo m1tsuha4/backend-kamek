@@ -16,6 +16,17 @@ const upload = multer({ storage: storage });
 class UserController {  
   static async create(req, res) {  
     try {  
+      const password = req.body.password;
+      const confirmPassword = req.body.confirm_password;
+
+      if (password !== confirmPassword) {
+        return res.status(400).json({
+          success: false,
+          data: null,
+          message: "Password and confirm password do not match",
+        });
+      }
+
       const hashPassword = bcrypt.hashSync(req.body.password, 10);
       const userData = {
         ...req.body,
@@ -79,14 +90,28 @@ class UserController {
   
   static async update(req, res) {  
     try {  
-      const user = await UserService.update(req.params.id, req.body);  
-      if (!user) {  
+      const existingUser = await UserService.getById(req.params.id);
+      if (!existingUser) {  
         return res.status(404).json({  
           success: false,  
           data: null,  
           message: "not found",  
         });  
       }  
+
+      const updatedUser = req.body;
+      if (req.file) {
+        if(existingUser.profile_image!==null){
+          const oldPath = path.join(__dirname, "../public/user", existingUser.profile_image);
+          fs.unlink(oldPath, (err) => {
+            if (err) {
+              console.error(`Error deleting file: ${err}`);
+            }
+          });
+        }
+        updatedUser.profile_image = req.file.filename;
+      }
+      const user = await UserService.update(req.params.id, updatedUser);  
       res.status(200).json({  
         success: true,  
         data: user,  
@@ -132,7 +157,7 @@ class UserController {
         return res.status(404).json({
           success: false,
           data: null,
-          message: "not found",
+          message: "No Hp or Password is wrong",
         });
       }
       res.status(200).json({

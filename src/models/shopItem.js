@@ -1,8 +1,9 @@
 const { DataTypes } = require("sequelize");  
 const sequelize = require("../config/database");  
+const { link } = require("../routes/userRoutes");
   
-const User = sequelize.define("user", {  
-  user_id: {  
+const ShopItem = sequelize.define("shop_item", {  
+  shop_item_id: {  
     type: DataTypes.INTEGER,  
     allowNull: false,
     primaryKey: true,
@@ -10,25 +11,19 @@ const User = sequelize.define("user", {
   }, 
   name: {
     type: DataTypes.STRING,
-    allowNull: true
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
-  },
-  password: {
-    type: DataTypes.STRING,
     allowNull: false
   },
-  profile_image: {
+  image_url: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  no_hp: {
+  price: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  link: {
     type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
+    allowNull: false
   },
   is_deleted: {
     type: DataTypes.BOOLEAN,
@@ -38,4 +33,4 @@ const User = sequelize.define("user", {
   timestamps: false
 });  
   
-module.exports = User;  
+module.exports = ShopItem;  
