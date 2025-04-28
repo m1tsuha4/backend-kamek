@@ -1,24 +1,24 @@
 const sequelize = require('../config/database');
 
-// Sync models with the database  
-const syncDatabase = async () => {
-    try {
-        // Sync only in development environment
-        if (process.env.NODE_ENV === 'development') {
-            await sequelize.sync({ force: true });
-            await require('./seed')();
-            console.log("Database & tables created!");
-        } else {
-            await sequelize.sync();
-            console.log("Database synced without resetting tables.");
-        }
-    } catch (error) {
-        console.error("Error syncing database:", error);
-    }
-};
-
-syncDatabase()
+const User = require('./user');
+const Disease = require('./disease');
+const VarietyInfo = require('./varietyInfo');
+const AnalysisHistory = require('./analysisHistory');
+const UserIotDevice = require('./userIotDevice');
+const SensorData = require('./sensorData');
+const SensorDataUnit = require('./sensorDataUnit');
+const IotDevice = require('./iotDevice');
+const ShopItem = require('./shopItem');
 
 module.exports = {
-    sequelize
+    sequelize,
+    User,
+    Disease,
+    VarietyInfo,
+    AnalysisHistory,
+    UserIotDevice,
+    SensorData,
+    SensorDataUnit,
+    IotDevice,
+    ShopItem
 };

@@ -3,6 +3,7 @@ const sequelize = require("./models/index");
 const errorHandler = require("./utils/errorHandler");
 const cors = require('cors');
 const {checkBlacklist, authenticateToken} = require('./config/middleware');
+const syncDatabase = require('./models/syncDatabase');
 
 const fs = require('fs');
 const path = require('path');
@@ -79,11 +80,11 @@ app.use(errorHandler);
 
 // Sync the database only if not in production
 if (process.env.NODE_ENV !== 'production') {
-  sequelize.sequelize.sync().then(() => {
-      console.log("Database synced");
-      app.listen(port, () => {
-          console.log(`Server runs on ${port}`);
-      });
+  syncDatabase().then(() => {
+    // After database is ready, start server
+    app.listen(3000, () => {
+        console.log('Server runs on port 3000');
+    });
   });
 } else {
   app.listen(port, () => {
