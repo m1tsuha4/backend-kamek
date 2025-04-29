@@ -24,10 +24,10 @@ class WeatherService {
                 dailyData[date] = {
                     max_temperature: item.main.temp_max,
                     min_temperature: item.main.temp_min,
-                    humidity: item.main.humidity / 100,
+                    humidity: item.main.humidity,
                     wind_velocity: item.wind.speed,
                     rainfall: item.rain ? item.rain['3h'] || 0 : 0,
-                    type: item.weather[0].description
+                    type_id: item.weather[0].id
                 };
             } else {
                 dailyData[date].max_temperature = Math.max(dailyData[date].max_temperature, item.main.temp_max);
@@ -58,10 +58,10 @@ class WeatherService {
           max_temperature: data.main.temp_max,
           min_temperature: data.main.temp_min,
           current_temperature: data.main.temp,
-          humidity: data.main.humidity / 100,
+          humidity: data.main.humidity,
           wind_velocity: data.wind.speed,
           rainfall: data.rain ? (data.rain['1h'] || 0) : 0,
-          type: data.weather[0].description
+          type_id: data.weather[0].id
       };
       return customWeather;
   } catch (error) {

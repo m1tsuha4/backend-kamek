@@ -20,8 +20,18 @@ class NewsController {
   
   static async getAll(req, res) {  
     try {  
-      const type = req.query.type;
-      const newss = await NewsService.getAll(type);  
+      let type = Number(req.query.type);
+      if(isNaN(type)){
+        type = 0;
+      }
+
+      let query = req.query.q;
+      if(!query){
+        query = "";
+      }
+
+      const newss = await NewsService.getAll(query, type);  
+
       res.status(200).json({  
         success: true,  
         data: newss,  
@@ -38,7 +48,13 @@ class NewsController {
   
   static async getById(req, res) {  
     try {  
-      const news = await NewsService.getById(req.params.id);  
+      let type = Number(req.query.type);
+      if(isNaN(type)){
+        type = 0;
+      }
+
+      const news = await NewsService.getById(req.params.id, type);  
+
       if (!news) {  
         return res.status(404).json({  
           success: false,  

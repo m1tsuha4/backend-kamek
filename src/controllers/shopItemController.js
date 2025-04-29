@@ -20,7 +20,12 @@ class ShopItemController {
   
   static async getAll(req, res) {  
     try {  
-      const shopItems = await ShopItemService.getAll();  
+      let query = req.query.q;
+      if(!query){
+        query = "";
+      }
+
+      const shopItems = await ShopItemService.getAll(query);  
       res.status(200).json({  
         success: true,  
         data: shopItems,  

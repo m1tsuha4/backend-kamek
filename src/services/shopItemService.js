@@ -1,16 +1,25 @@
 const ShopItem = require("../models/shopItem");  
+const { Op } = require('sequelize');
   
 class ShopItemService {  
   static async create(data) {  
     return await ShopItem.create(data);  
   }  
   
-  static async getAll() {  
+  static async getAll(query = "") {  
+    const whereClause = {
+      is_deleted: false
+    };
+  
+    if (query && query.trim() !== "") {
+      whereClause.name = {
+        [Op.like]: `%${query}%`
+      };
+    }
+  
     return await ShopItem.findAll({
-      where: {
-        is_deleted: false
-      }
-    });  
+      where: whereClause
+    });
   }  
   
   static async getById(id) {  

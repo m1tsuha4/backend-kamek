@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
   
 class UserService {  
   static async create(data) {  
-    return await User.create(data);  
+    const user = await User.create(data);
+    return this.generateToken(user.user_id, user.no_hp, user.name);
   }  
   
   static async getAll() {  
@@ -59,9 +60,9 @@ class UserService {
     if (!valid) {
       return null;
     }
-    return this.generateToken(user.user_id, user.no_hp);
+    return this.generateToken(user.user_id, user.no_hp, user.name);
   }
-  static async generateToken(userId, userNohp) {
+  static async generateToken(userId, userNohp, userName) {
     const payload = {
         userId: userId,
         noHp: userNohp,
@@ -70,6 +71,7 @@ class UserService {
 
     const response = {
         user_id: userId,
+        user_name: userName,
         token: token
     };
 
