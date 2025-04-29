@@ -20,7 +20,8 @@ class NewsController {
   
   static async getAll(req, res) {  
     try {  
-      const newss = await NewsService.getAll();  
+      const type = req.query.type;
+      const newss = await NewsService.getAll(type);  
       res.status(200).json({  
         success: true,  
         data: newss,  
