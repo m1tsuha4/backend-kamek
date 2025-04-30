@@ -37,7 +37,7 @@ const AnalysisHistory = sequelize.define("analysis_history", {
   },
   date: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: true
   },
   session_name: {
     type: DataTypes.INTEGER,
@@ -49,27 +49,39 @@ const AnalysisHistory = sequelize.define("analysis_history", {
   },
   damage_level: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   damage_percentage: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   damage_information: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   solution: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   prevention: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
-  bb_coordinate: {
-    type: DataTypes.STRING,
-    allowNull: false
+  bb_coordinates_topLeft: {
+    type: DataTypes.INTEGER, 
+    allowNull: true,
+  },
+  bb_coordinates_topRight: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  bb_coordinates_bottomLeft: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  bb_coordinates_bottomRight: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
   is_deleted: {
     type: DataTypes.BOOLEAN,
