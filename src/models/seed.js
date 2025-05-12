@@ -1,7 +1,10 @@
+const Disease = require("./disease");
 const ShopItem = require("./shopItem");
+const VarietyInfo = require("./varietyInfo");
 
 const seedDatabase = async () => {
     try {
+        // Shop Items
         await ShopItem.create({ name: "Apple", image_url: "https://example.com/apple.jpg", price: 1.99, link: "https://example.com/apple" });
         await ShopItem.create({ name: "Banana", image_url: "https://example.com/banana.jpg", price: 0.99, link: "https://example.com/banana" });
         await ShopItem.create({ name: "Orange", image_url: "https://example.com/orange.jpg", price: 1.49, link: "https://example.com/orange" });
@@ -9,6 +12,16 @@ const seedDatabase = async () => {
         await ShopItem.create({ name: "Pineapple", image_url: "https://example.com/pineapple.jpg", price: 3.99, link: "https://example.com/pineapple" });
         await ShopItem.create({ name: "Strawberry", image_url: "https://example.com/strawberry.jpg", price: 4.99, link: "https://example.com/strawberry" });
         await ShopItem.create({ name: "Watermelon", image_url: "https://example.com/watermelon.jpg", price: 5.99, link: "https://example.com/watermelon" });
+        
+        // Variety Info
+        await VarietyInfo.create({ variety: "Apple", max_price: 1.99 });
+        await VarietyInfo.create({ variety: "Banana", max_price: 0.99 });
+        await VarietyInfo.create({ variety: "Orange", max_price: 1.49 });
+
+        // Disease
+        await Disease.create({ name: "Apple Scab", symptom: "Fruit rot", cause: "Fungal infection", seed_condition: "Fruit rot", default_solution: "Fungicide", default_prevention: "Fungicide" });
+        await Disease.create({ name: "Apple Black rot", symptom: "Fruit rot", cause: "Fungal infection", seed_condition: "Fruit rot", default_solution: "Fungicide", default_prevention: "Fungicide" });
+        await Disease.create({ name: "Apple Cedar rust", symptom: "Fruit rot", cause: "Fungal infection", seed_condition: "Fruit rot", default_solution: "Fungicide", default_prevention: "Fungicide" });
         
         console.log("Database seeded successfully");
     } catch (error) {

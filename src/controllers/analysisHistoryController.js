@@ -1,9 +1,25 @@
 const AnalysisHistoryService = require("../services/analysisHistoryService");  
-  
+const multer = require("multer");
+const path = require("path");
+const fs = require('fs');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../public/analysis"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+const upload  = multer({ storage: storage });
 class AnalysisHistoryController {  
   static async create(req, res) {  
     try {  
-      const analysisHistory = await AnalysisHistoryService.create(req.body);  
+      const analysisData = {
+        ...req.body,
+        session_image: req.file ? req.file.filename : null
+      }
+      const analysisHistory = await AnalysisHistoryService.create(analysisData);  
       res.status(201).json({  
         success: true,  
         data: analysisHistory,  
@@ -108,4 +124,4 @@ class AnalysisHistoryController {
   }  
 }  
   
-module.exports = AnalysisHistoryController;  
+module.exports = {AnalysisHistoryController, upload};  
